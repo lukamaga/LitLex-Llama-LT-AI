@@ -179,3 +179,32 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# ML & DATA SCIENCE SPECIFIC IGNORES
+
+# Heavy model weights (GitHub limit is 100MB)
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.gguf
+
+# Model saving directories
+models/
+checkpoints/
+outputs/
+lora_adapters/
+
+# Weights & Biases logs (Training logs)
+wandb/
+
+# Local Hugging Face cache
+.cache/
+.huggingface/
+
+# Mac OS specific trash (often appears)
+.DS_Store
+
+# User specific secrets (Double check!)
+.env
+api_keys.txt
