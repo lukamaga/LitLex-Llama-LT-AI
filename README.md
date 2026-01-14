@@ -10,9 +10,17 @@ This project demonstrates the application of Supervised Fine-Tuning (SFT) techni
 
 ---
 
+## Project Motivation & Machine Learning Approach
+
+Navigating complex legal documentation to find specific fines or regulations is often time-consuming and requires domain expertise. Traditional keyword search methods lack the semantic understanding to answer questions like *"What is the fine for X if I am a first-time offender?"*.
+
+To solve this, we applied **Machine Learning (Deep Learning)** methods to transform raw legal texts into a conversational intelligence. By utilizing **Supervised Fine-Tuning (SFT)** on the Llama-3 architecture, we successfully mapped natural language user queries to specific legal articles and penalty ranges defined in the Administrative Code.
+
+---
+
 ## Model Capabilities & Demo
 
-The model has been fine-tuned to achieve high factual accuracy. Unlike generic LLMs, LitLex specifically memorizes articles numbers and fine ranges from the ANK code.
+The model has been fine-tuned to achieve high factual accuracy. Unlike generic LLMs, LitLex specifically memorizes article numbers and fine ranges from the ANK code.
 
 ### Real Usage Examples
 
@@ -62,19 +70,29 @@ The training process showed a dramatic improvement in accuracy, reaching a final
 
 ---
 
+## Model Availability on Hugging Face
+
+The fine-tuned model weights (LoRA adapters) are hosted on the Hugging Face Hub. This ensures easy access and version control without increasing the size of the GitHub repository.
+
+**Official Model Repository:**
+[https://huggingface.co/lukashm/LitLex-Llama-LT-v1](https://huggingface.co/lukashm/LitLex-Llama-LT-v1)
+
+### Automatic Integration
+The project is designed for seamless integration. The `test.py` script acts as a client: upon execution, it automatically connects to the Hugging Face Hub, downloads the specific fine-tuned adapters, and merges them with the base Llama-3 model in real-time. No manual model download is required.
+
 ## Project Structure
 
 This repository is organized into data processing, training, and inference modules.
 
 ```text
-LitLex-AI/
+LitLex-Llama-LT-AI/
 ├── data/
 │   ├── ank_raw.txt             # Original legal text source
 │   └── ank_dataset.json        # Synthetic QA dataset generated via GPT-4o
 ├── src/
 │   ├── dataset_builder.py      # Script to generate JSON dataset from raw text
 │   ├── finetune.py             # Main training script using Unsloth/SFT
-│   └── inference.py            # CLI Chat interface for testing the model
+│   └── test.py                 # CLI Chat interface for testing the model
 ├── requirements.txt            # Project dependencies
 └── README.md                   # Project documentation
 ```
@@ -85,8 +103,8 @@ To run the Legal AI Assistant on your local machine, follow these steps:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/LitLex-AI.git
-cd LitLex-AI
+git clone https://github.com/YOUR_USERNAME/LitLex-Llama-LT-AI.git
+cd LitLex-Llama-LT-AI
 ```
 
 ### 2. Install dependencies
@@ -97,12 +115,18 @@ pip install -r requirements.txt
 ### 3. Run the AI Assistant
 The inference script automatically downloads the fine-tuned model weights from Hugging Face.
 ```bash
-python src/inference.py
+python src/test.py
 ```
+
+## Performance & Scope
+
+This project achieves exceptional results in reproducing legal texts from the training set (Loss < 0.1). However, users should be aware of the following technical characteristics:
+1.  **Narrow Scope:** The model is strictly specialized in the **Administrative Code (ANK)**. It does not possess knowledge of traffic rules (KET) or criminal law unless they directly overlap with administrative fines. Queries outside this scope may yield generic answers.
+2.  **Generative Nature:** Despite high accuracy, as a generative ML model, it may occasionally "hallucinate" article numbers or fine amounts. This is a known limitation of current LLM architectures without RAG (Retrieval-Augmented Generation).
 
 ## Disclaimer
 
 This Artificial Intelligence model is developed for educational and research purposes. While it demonstrates high accuracy in citing the Administrative Code (ANK), it is not a substitute for professional legal advice. The developers are not responsible for any inaccuracies produced by the model.
 
 ---
-**Developed by Lukash**
+**Developed by Lukash Magalinski**
