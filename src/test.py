@@ -4,7 +4,7 @@ import torch
 MODEL_NAME = "lukashm/LitLex-Llama-LT-v1"
 
 def run_test():
-    print(f"⏳ Loading model from: {MODEL_NAME}...")
+    print(f"Loading model from: {MODEL_NAME}...")
 
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=MODEL_NAME,
@@ -52,8 +52,8 @@ def run_test():
 
         clean_response = response.split("### Response:\n")[1].replace("<|end_of_text|>", "").strip()
 
-        print(f"👤 Klausimas: {q}")
-        print(f"🤖 Atsakymas: {clean_response}")
+        print(f"Klausimas: {q}")
+        print(f"Atsakymas: {clean_response}")
         print("-" * 50)
 
 
