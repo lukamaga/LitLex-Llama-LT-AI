@@ -1,7 +1,7 @@
 from unsloth import FastLanguageModel
 import torch
 
-MODEL_NAME = "lukashm/LitLex-Llama-LT-v1"
+MODEL_NAME = "lukashm/LitLex-Llama-LT-v1" #https://huggingface.co/lukashm/LitLex-Llama-LT-v1
 
 def run_test():
     print(f"Loading model from: {MODEL_NAME}...")
