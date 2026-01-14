@@ -1,0 +1,18 @@
+# Core ML libraries
+torch
+xformers
+bitsandbytes
+
+# Hugging Face ecosystem
+transformers
+peft
+accelerate
+datasets
+trl
+huggingface_hub
+
+# OpenAI for data generation
+openai
+
+# Unsloth (Latest version from GitHub is recommended for Llama-3)
+unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git
