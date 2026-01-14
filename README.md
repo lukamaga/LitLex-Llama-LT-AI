@@ -25,21 +25,25 @@ The model has been fine-tuned to achieve high factual accuracy. Unlike generic L
 ### Real Usage Examples
 
 **User:** Kokia bauda gresia už greičio viršijimą daugiau kaip 50 km/h?
+
 **LitLex:** Pagal ANK 416 str., bauda yra nuo 450 iki 550 eurų vairuotojams ir nuo 450 iki 700 eurų asmenims neturintiems teisės vairuoti.
 
 ---
 
 **User:** Ką daryti, jei kaimynai triukšmauja naktį? Kokia bauda?
+
 **LitLex:** Pagal ANK 299 str. 1 dalį, administracinėn atsakomybėn traukiami asmenys, kurie padarė pakartotinį nusižengimą, turi sumokėti baudą nuo 140 iki 300 eurų.
 
 ---
 
 **User:** Kokia bauda už nelegalų darbą?
+
 **LitLex:** Pagal ANK 95 straipsnį, bauda darbdaviui – fiziniam asmeniui yra nuo 2000 iki 5000 eurų, o darbdavio – juridinio asmens vadovui ar kitam atsakingam asmeniui – nuo 1500 iki 5000 eurų.
 
 ---
 
 **User:** Kokia bauda už triukšmavimą vakaro metu?
+
 **LitLex:** Pagal Lietuvos Respublikos administracinių nusižengimų kodeksą, triukšmavimas vakaro metu yra numatyta kaip viena iš šiurkštų socių teisės aktų, todėl bauda asmenims nuo 60 iki 140 eurų, o juridinių asmenų vadovams ar kitiems atsakingiems asmenims – nuo 140 iki 300 eurų.
 
 ---
