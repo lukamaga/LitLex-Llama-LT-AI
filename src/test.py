@@ -6,7 +6,6 @@ MODEL_NAME = "lukashm/LitLex-Llama-LT-v1"
 def run_test():
     print(f"⏳ Loading model from: {MODEL_NAME}...")
 
-    # 1. Загрузка модели из Hugging Face
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=MODEL_NAME,
         max_seq_length=2048,
