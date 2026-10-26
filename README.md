@@ -155,7 +155,7 @@ LitLex-Llama-LT-AI/
 | **Disk** | About 7 GB for the model files |
 | **Accounts** | None. The base model and the adapter are public, so no Hugging Face login is needed. Only step 4 needs an OpenAI API key |
 
-The scripts load the model in 4-bit with Unsloth and call CUDA directly, so they will not run on a Mac as they are. To try the model on Apple Silicon, use option C in the [model card](https://huggingface.co/lukashm/LitLex-Llama-LT-v1#option-c-apple-silicon-mps-or-cpu).
+It works on Google Colab, on Linux and on Windows (natively or through WSL). The scripts load the model in 4-bit with Unsloth and call CUDA directly, so they will not run on a Mac as they are. To try the model on Apple Silicon, use option C in the [model card](https://huggingface.co/lukashm/LitLex-Llama-LT-v1#option-c-apple-silicon-mps-or-cpu).
 
 ### What gets downloaded
 
@@ -222,6 +222,51 @@ python finetune.py
 ```
 
 Run steps 4 and 5 from inside `src/`, because both scripts use paths like `../data/ank_dataset.json`.
+
+### On Windows
+
+The easiest way is the [Colab quick start](#quick-start-on-google-colab) above, because nothing has to be installed. To run it on your own Windows PC with an NVIDIA GPU, there are two ways. Both follow [Unsloth's Windows guide](https://unsloth.ai/docs/get-started/install/windows-installation).
+
+**Native Windows with Conda**
+
+1. Open PowerShell and run `nvidia-smi`. It should show your GPU and a CUDA version. If it fails, install or update the NVIDIA driver first.
+2. Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) and [Git for Windows](https://git-scm.com/download/win), then open **Anaconda PowerShell Prompt**.
+3. Run:
+
+```powershell
+conda create --name litlex python=3.12 -y
+conda activate litlex
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+The last command must print `True`. If it prints `False`, PyTorch does not see your GPU. Change `cu130` to the build that matches the CUDA version from `nvidia-smi` (the list is on [pytorch.org](https://pytorch.org/get-started/locally/)) and run the install again.
+
+4. Then install Unsloth and run the model:
+
+```powershell
+pip install unsloth
+git clone https://github.com/lukamaga/LitLex-Llama-LT-AI.git
+cd LitLex-Llama-LT-AI
+python src/test.py
+```
+
+On Windows, use `pip install unsloth` instead of `pip install -r requirements.txt`. The requirements file installs the Colab build of Unsloth, which is meant for Colab and Linux.
+
+**WSL (Linux inside Windows)**
+
+In PowerShell, install Ubuntu:
+
+```powershell
+wsl.exe --install Ubuntu-24.04
+```
+
+Then open Ubuntu and follow the [Linux steps](#on-your-own-linux-machine-with-an-nvidia-gpu) above. Keep the NVIDIA driver installed on Windows itself, not inside Ubuntu: WSL uses the Windows driver.
+
+**Small differences on Windows**
+
+- To set the OpenAI key for step 4 in PowerShell, use `$env:OPENAI_API_KEY="..."` instead of `export`.
+- The Hugging Face cache is in `C:\Users\<your name>\.cache\huggingface\hub`.
 
 ## Performance & Scope
 
