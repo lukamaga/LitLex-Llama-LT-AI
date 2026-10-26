@@ -62,6 +62,15 @@ The model learned the answer style of its training data well, and it often gives
 
 *Check: wrong. No article, broken Lithuanian and wrong amounts. The right answer is again Art. 488 part 1: 80-200 EUR and 200-300 EUR.*
 
+### Summary of the checks
+
+| Question | Article in the answer | Correct article | Fine in the answer | Verdict |
+| :--- | :--- | :--- | :--- | :--- |
+| Speeding by more than 50 km/h | ANK 416 | ANK 416 part 6 | Right, license suspension missing | Correct, near copy of a training pair |
+| Neighbors making noise at night | ANK 299 | ANK 488 part 1 | Wrong (140-300 EUR instead of 80-200 EUR) | Wrong |
+| Illegal work | ANK 95 | ANK 95 part 1 | Right, repeat-offense fine missing | Correct, same question in the training data |
+| Noise in the evening | none | ANK 488 part 1 | Wrong (60-140 EUR instead of 80-200 EUR) | Wrong |
+
 So 2 of 4 are right, and both are near copies of training pairs.
 
 ---
@@ -74,15 +83,17 @@ The model was trained with **Unsloth** (QLoRA) on a Tesla T4 GPU. The training o
 
 The training loss fell from 2.71 to **0.0897**. There was no validation split, so this shows that the model memorized its training set. It does not say how often its answers are correct.
 
-| Stage | Step | Training Loss |
-| :--- | :--- | :--- |
-| **Start** | 1 | 2.7105 |
-| | 10 | 1.4465 |
-| **Middle** | 120 | 0.5252 |
-| | 253 | 0.2463 |
-| | 350 | 0.1577 |
-| **Final** | 480 | 0.0840 |
-| | **500** | **0.0897** |
+| Stage | Step | Epoch | Training Loss | Interpretation |
+| :--- | :--- | :--- | :--- | :--- |
+| **Start** | 1 | 0.02 | 2.7105 | Starting point |
+| | 10 | 0.16 | 1.4465 | Fast early drop |
+| **Middle** | 120 | 1.9 | 0.5252 | Steady decrease |
+| | 253 | 4.1 | 0.2463 | Steady decrease |
+| | 350 | 5.6 | 0.1577 | Slowing down |
+| **Final** | 480 | 7.7 | 0.0840 | Near zero: the training pairs are largely memorized |
+| | **500** | **8.0** | **0.0897** | End of training |
+
+Each value is the loss of a single batch of 8 examples, so small ups and downs (like 0.0840 at step 480 and 0.0897 at step 500) are noise.
 
 **Training Parameters:**
 - **Epochs:** about 8 (500 steps x 8 samples over 498 pairs)
