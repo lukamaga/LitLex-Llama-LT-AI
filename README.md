@@ -146,37 +146,76 @@ LitLex-Llama-LT-AI/
 
 ## Installation and Usage
 
-You need an NVIDIA GPU. A free T4 on Colab or Kaggle is enough. The scripts load the model in 4-bit with Unsloth and call CUDA directly, so they will not run on a Mac as they are. To try the model on Apple Silicon, use option C in the [model card](https://huggingface.co/lukashm/LitLex-Llama-LT-v1#option-c-apple-silicon-mps-or-cpu).
+### What you need
 
-### 1. Clone the repository
+| Requirement | Details |
+| :--- | :--- |
+| **GPU** | An NVIDIA GPU with about 7 GB of VRAM. A free T4 on Google Colab or Kaggle is enough |
+| **Python** | 3.10 or newer |
+| **Disk** | About 7 GB for the model files |
+| **Accounts** | None. The base model and the adapter are public, so no Hugging Face login is needed. Only step 4 needs an OpenAI API key |
+
+The scripts load the model in 4-bit with Unsloth and call CUDA directly, so they will not run on a Mac as they are. To try the model on Apple Silicon, use option C in the [model card](https://huggingface.co/lukashm/LitLex-Llama-LT-v1#option-c-apple-silicon-mps-or-cpu).
+
+### What gets downloaded
+
+`src/test.py` downloads two things from Hugging Face the first time you run it:
+
+| File | Size | Where it comes from |
+| :--- | :--- | :--- |
+| Base model `unsloth/llama-3-8b-bnb-4bit` | about 5.7 GB | [Hugging Face](https://huggingface.co/unsloth/llama-3-8b-bnb-4bit) |
+| LitLex adapter `lukashm/LitLex-Llama-LT-v1` | 671 MB | [Hugging Face](https://huggingface.co/lukashm/LitLex-Llama-LT-v1) |
+
+Both are saved in the Hugging Face cache (`~/.cache/huggingface/hub`), so later runs start without downloading again. The ANK text and the training pairs are already in this repo under `data/`.
+
+### Quick start on Google Colab
+
+1. Open a new notebook at [colab.research.google.com](https://colab.research.google.com).
+2. Go to **Runtime > Change runtime type**, choose **T4 GPU** and save.
+3. Run these cells:
+
+```python
+!git clone https://github.com/lukamaga/LitLex-Llama-LT-AI.git
+%cd LitLex-Llama-LT-AI
+!pip install unsloth
+!python src/test.py
+```
+
+The first run takes a few minutes, mostly for installing Unsloth and downloading the base model. Then the script prints the four example questions with the model's answers.
+
+### On your own Linux machine with an NVIDIA GPU
+
+#### 1. Clone the repository
 ```bash
 git clone https://github.com/lukamaga/LitLex-Llama-LT-AI.git
 cd LitLex-Llama-LT-AI
 ```
 
-### 2. Install dependencies
+#### 2. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-`requirements.txt` installs Unsloth from GitHub with the Colab extras, so it is meant for Colab or a Linux CUDA machine.
+`requirements.txt` installs Unsloth from its GitHub repository with the Colab extras, which is how I trained the model in January 2026. If that install fails on a newer setup, `pip install unsloth` is usually enough to run `src/test.py`.
 
-### 3. Run the AI Assistant
-The script downloads the fine-tuned weights from Hugging Face and asks the four example questions.
+#### 3. Run the AI Assistant
+The script downloads the base model and the adapter (see above) and asks the four example questions.
 ```bash
 python src/test.py
 ```
 
-### 4. Rebuild the dataset (optional)
-Needs an OpenAI API key. The output will differ from the published file.
+To ask your own question, change the `questions` list in `src/test.py`. Keep the prompt template as it is: the model was trained on that exact format.
+
+#### 4. Rebuild the dataset (optional)
+Needs an OpenAI API key and makes about 94 calls to GPT-4o, one per chunk of the ANK text. The output will differ from the published file.
 ```bash
 cd src
 export OPENAI_API_KEY=...
 python dataset_builder.py
 ```
 
-### 5. Train the adapter again (optional)
-Saves the adapter to `models/litlex_adapter`.
+#### 5. Train the adapter again (optional)
+Takes the pairs from `data/ank_dataset.json` and saves the new adapter to `models/litlex_adapter`.
 ```bash
 cd src
 python finetune.py
