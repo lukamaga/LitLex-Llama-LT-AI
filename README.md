@@ -207,7 +207,7 @@ python src/test.py
 To ask your own question, change the `questions` list in `src/test.py`. Keep the prompt template as it is: the model was trained on that exact format.
 
 #### 4. Rebuild the dataset (optional)
-Needs an OpenAI API key and makes about 94 calls to GPT-4o, one per chunk of the ANK text. The output will differ from the published file.
+Needs an OpenAI API key and makes 94 calls to GPT-4o, one per chunk of the ANK text. The output will differ from the published file.
 ```bash
 cd src
 export OPENAI_API_KEY=...
