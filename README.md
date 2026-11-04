@@ -198,7 +198,7 @@ pip install -r requirements.txt
 
 `requirements.txt` installs Unsloth from its GitHub repository with the Colab extras, which is how I trained the model in January 2026. If that install fails on a newer setup, `pip install unsloth` is usually enough to run `src/test.py`.
 
-#### 3. Run the AI Assistant
+#### 3. Run the assistant
 The script downloads the base model and the adapter (see above) and asks the four example questions.
 ```bash
 python src/test.py
