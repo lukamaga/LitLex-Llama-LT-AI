@@ -14,7 +14,7 @@ This project applies Supervised Fine-Tuning (SFT) with QLoRA to **Llama-3-8B** t
 
 ## Project Motivation & Machine Learning Approach
 
-Navigating complex legal documentation to find specific fines or regulations is often time-consuming and requires domain expertise. Traditional keyword search methods lack the semantic understanding to answer questions like *"What is the fine for X if I am a first-time offender?"*.
+Navigating complex legal documentation to find specific fines or regulations is often time-consuming and requires domain expertise. Traditional keyword search methods lack the semantic understanding to answer questions like *"What is the fine for X if I am a first-time offender?"*
 
 I wanted to see how far supervised fine-tuning alone can go here. I took the consolidated ANK text, turned it into question and answer pairs and trained Llama 3 on them, so that the model would map plain Lithuanian questions to the right articles and fine ranges without looking anything up.
 
